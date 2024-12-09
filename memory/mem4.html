@@ -120,7 +120,7 @@
     <div class="flex justify-between items-center w-full max-w-4xl mb-6">
       <div>
         <h1 class="text-6xl font-bold">Memory</h1>
-        <p class="font-bold text-4xl mt-3">Тема 4: Работа с DOM в JavaScript: Основные методы</p>
+        <p class="font-bold text-4xl mt-3">Тема 3: Методы работы с массивами в JavaScript</p>
       </div>
       <button id="restart"
         class="bg-[#0DCED5] text-[#0B1234] rounded-[25px] px-6 py-3 inline-flex items-center text-center justify-center font-semibold text-3xl hover:bg-[#1BC9E0] transition w-[259px] h-[84px]">
@@ -148,11 +148,11 @@
   <div id="result-popup">
     <h2 class="text-2xl font-bold mb-4">Игра окончена!</h2>
     <p id="result-message" class="text-lg mb-6"></p>
-    <button href="../index.html"
-      class="bg-[#0DCED5] text-[#0B1234] rounded-[25px] px-4 py-2 text-xl font-semibold hover:bg-[#1BC9E0] transition">
-      На главную
-    </button>
+    <a href="../index.html" 
+       class="bg-[#0DCED5] text-[#0B1234] rounded-[25px] px-4 py-2 text-xl font-semibold hover:bg-[#1BC9E0] transition">
+На главную    </a>
   </div>
+  
 
   <script>
     const cardsData = [
@@ -174,7 +174,7 @@
     const overlay = document.getElementById("overlay");
     const resultPopup = document.getElementById("result-popup");
     const resultMessage = document.getElementById("result-message");
-    const closePopupButton = document.getElementById("close-popup");
+    // const closePopupButton = document.getElementById("close-popup");
     const startGameButton = document.getElementById("startGame");
     const gameContainer = document.getElementById("gameContainer");
     const popup = document.getElementById("popup");
@@ -273,10 +273,10 @@
       resultMessage.textContent = `Вы нашли все пары за ${moves} ходов!`;
     }
 
-    closePopupButton.addEventListener("click", () => {
-      overlay.style.display = "none";
-      resultPopup.style.display = "none";
-    });
+    // closePopupButton.addEventListener("click", () => {
+    //   overlay.style.display = "none";
+    //   resultPopup.style.display = "none";
+    // });
 
     restartButton.addEventListener("click", () => {
       firstCard = null;
