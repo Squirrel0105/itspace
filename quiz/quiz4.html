@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Викторина</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+
+        #popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1E1B4B;
+            border: 2px solid #0DCED5;
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            z-index: 1000;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="bg-cover bg-[url('../img/bg_other.png')] text-white min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="p-6 bg-[#0B1234] flex justify-between items-center h-[150px] w-full">
+        <div class="flex items-center">
+            <a href="../index.html"><img src="../img/super_logo.svg" class="h-[70px]"></a>
+        </div>
+        <nav>
+            <a href="../theory/theory_full.html"
+                class="text-white hover:text-blue-300 transition text-2xl mr-[350px]">Теория</a>
+        </nav>
+    </header>
+
+    <!-- Main Section -->
+    <main class="text-center mt-10 w-full max-w-4xl mx-auto flex-grow">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-4xl font-bold">Викторина</h1>
+            <button id="restart"
+                class="bg-[#0DCED5] text-[#0B1234] rounded-[25px] px-6 py-3 inline-flex items-center text-center justify-center font-semibold text-3xl hover:bg-[#1BC9E0] transition w-[259px] h-[84px]">
+                Заново <img src="../img/refresh.svg" class="ml-2">
+            </button>
+        </div>
+        <p class="text-lg mb-4">Тема 4: Работа с DOM в JavaScript: Основные методы</p>
+        <div id="question" class="border border-blue-400 p-6 rounded-lg text-xl mb-6"></div>
+        <div id="answers" class="grid gap-4 mb-6"></div>
+        <div id="explanation" class="text-lg font-semibold mb-6 hidden"></div>
+        <button id="next" class="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-400 transition hidden">
+            Далее
+        </button>
+    </main>
+
+    <!-- Modal -->
+    <div id="overlay"></div>
+    <div id="popup">
+        <h2 class="text-3xl font-bold mb-4">Перед началом игры!</h2>
+        <p class="mb-6">Изучите теорию, чтобы лучше справиться с заданиями!</p>
+        <div class="flex justify-center space-x-4">
+            <a href="../theory/theory_full.html"
+                class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-400 transition">Перейти
+                в теорию</a>
+            <button id="startGame"
+                class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-400 transition">Начать
+                игру</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "Какой метод позволяет найти элемент на странице по его id?",
+                answers: [
+                    { text: "document.getElementById", correct: true },
+                    { text: "document.querySelector", correct: false },
+                    { text: "addEventListener", correct: false },
+                    { text: "document.createElement", correct: false }
+                ],
+                explanation: "`document.getElementById` используется для поиска элемента на странице по его уникальному идентификатору (id)."
+            },
+            {
+                question: "Какой метод позволяет найти первый элемент, соответствующий CSS-селектору?",
+                answers: [
+                    { text: "document.getElementById", correct: false },
+                    { text: "document.querySelector", correct: true },
+                    { text: "addEventListener", correct: false },
+                    { text: "textContent", correct: false }
+                ],
+                explanation: "`document.querySelector` находит первый элемент, который соответствует указанному CSS-селектору."
+            },
+            {
+                question: "Какой метод добавляет обработчик события к элементу?",
+                answers: [
+                    { text: "addEventListener", correct: true },
+                    { text: "document.getElementById", correct: false },
+                    { text: "document.createElement", correct: false },
+                    { text: "textContent", correct: false }
+                ],
+                explanation: "`addEventListener` позволяет привязать обработчик события (например, 'click') к определенному элементу."
+            },
+            {
+                question: "Какое свойство позволяет изменить текст внутри элемента?",
+                answers: [
+                    { text: "document.getElementById", correct: false },
+                    { text: "document.querySelector", correct: false },
+                    { text: "textContent", correct: true },
+                    { text: "addEventListener", correct: false }
+                ],
+                explanation: "`textContent` изменяет текстовое содержимое элемента."
+            },
+            {
+                question: "Какой метод создает новый элемент, который можно добавить на страницу?",
+                answers: [
+                    { text: "document.createElement", correct: true },
+                    { text: "document.getElementById", correct: false },
+                    { text: "addEventListener", correct: false },
+                    { text: "textContent", correct: false }
+                ],
+                explanation: "`document.createElement` создает новый DOM-элемент, который можно добавить на страницу с помощью других методов."
+            },
+            {
+                question: `Что выведет следующий код?\n\`\`\`javascript
+let element = document.getElementById("header");
+console.log(element);
+\`\`\``,
+                answers: [
+                    { text: "Найдет элемент с id='header'", correct: true },
+                    { text: "Найдет элемент с классом header", correct: false },
+                    { text: "Ничего не найдет", correct: false },
+                    { text: "Выдаст ошибку", correct: false }
+                ],
+                explanation: "Код находит элемент с id='header' и выводит его в консоль, если такой элемент существует."
+            },
+            {
+                question: "Какой код найдет первый элемент с классом button?",
+                answers: [
+                    { text: "A. document.getElementById('.button')", correct: false },
+                    { text: "B. document.querySelector('.button')", correct: true },
+                    { text: "C. document.createElement('.button')", correct: false },
+                    { text: "D. document.addEventListener('.button')", correct: false }
+                ],
+                explanation: "`document.querySelector('.button')` возвращает первый элемент на странице, который имеет класс 'button'."
+            },
+            {
+                question: `Что выведет следующий код?\n\`\`\`javascript
+let button = document.querySelector(".btn");
+button.addEventListener("click", () => {
+  console.log("Кнопка нажата!");
+});
+\`\`\``,
+                answers: [
+                    { text: "Обработчик события для нажатия на кнопку.", correct: true },
+                    { text: "Ошибка в коде.", correct: false },
+                    { text: "Элемент .btn удалится.", correct: false },
+                    { text: "Ничего не произойдет.", correct: false }
+                ],
+                explanation: "Код добавляет обработчик события 'click' для элемента с классом '.btn', который выводит 'Кнопка нажата!' при нажатии."
+            },
+            {
+                question: `Что делает следующий код?\n\`\`\`javascript
+let header = document.getElementById("main-header");
+header.textContent = "Привет, мир!";
+\`\`\``,
+                answers: [
+                    { text: "Меняет текст элемента с id='main-header' на 'Привет, мир!'.", correct: true },
+                    { text: "Добавляет новый элемент с текстом 'Привет, мир!'.", correct: false },
+                    { text: "Удаляет элемент с id='main-header'.", correct: false },
+                    { text: "Ничего не меняет.", correct: false }
+                ],
+                explanation: "`textContent` обновляет текстовое содержимое элемента с id='main-header'."
+            },
+            {
+                question: "Какой код создаст новый элемент <div> и добавит его на страницу?",
+                answers: [
+                    { text: "let newDiv = document.createElement('div'); document.body.appendChild(newDiv);", correct: true },
+                    { text: "document.getElementById('div').appendChild('Это новый элемент!');", correct: false },
+                    { text: "document.querySelector('div').addEventListener('Это новый элемент!');", correct: false },
+                    { text: "document.textContent('div').createElement('Это новый элемент!');", correct: false }
+                ],
+                explanation: "`document.createElement` создает новый элемент <div>, а `appendChild` добавляет его в DOM."
+            }
+        ];
+
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const questionElement = document.getElementById("question");
+        const answersElement = document.getElementById("answers");
+        const explanationElement = document.getElementById("explanation");
+        const nextButton = document.getElementById("next");
+        const restartButton = document.getElementById("restart");
+
+        const overlay = document.getElementById("overlay");
+        const popup = document.getElementById("popup");
+        const startGameButton = document.getElementById("startGame");
+
+        document.addEventListener("DOMContentLoaded", () => {
+            overlay.style.display = "block";
+            popup.style.display = "block";
+        });
+
+        startGameButton.addEventListener("click", () => {
+            overlay.style.display = "none";
+            popup.style.display = "none";
+        });
+
+        function showQuestion() {
+            const questionData = quizData[currentQuestion];
+            questionElement.textContent = questionData.question;
+            answersElement.innerHTML = "";
+            explanationElement.classList.add("hidden");
+
+            questionData.answers.forEach((answer) => {
+                const button = document.createElement("button");
+                button.textContent = answer.text;
+                button.className = "px-4 py-2 bg-purple-500 rounded-lg text-white hover:bg-purple-400 transition w-full";
+                button.dataset.correct = answer.correct;
+                button.addEventListener("click", selectAnswer);
+                answersElement.appendChild(button);
+            });
+
+            nextButton.classList.add("hidden");
+        }
+
+        function selectAnswer(e) {
+            const selectedButton = e.target;
+            const correct = selectedButton.dataset.correct === "true";
+
+            Array.from(answersElement.children).forEach((button) => {
+                if (button.dataset.correct === "true") {
+                    button.classList.add("bg-[#24A53C]");
+                } else if (button === selectedButton && !correct) {
+                    button.classList.add("bg-red-500");
+                }
+                button.disabled = true;
+            });
+
+            if (correct) score++;
+
+            explanationElement.textContent = quizData[currentQuestion].explanation;
+            explanationElement.classList.remove("hidden");
+            nextButton.classList.remove("hidden");
+        }
+
+        function showResults() {
+            const resultContainer = document.createElement("div");
+            resultContainer.className = "text-center";
+
+            let resultImage = "";
+            let resultText = "";
+
+            if (score <= 4) {
+                resultImage = "../img/0-4.png";
+                resultText = "Вы даже не взлетели....";
+            } else if (score <= 6) {
+                resultImage = "../img/5-6.png";
+                resultText = "У вас почти получилось....";
+            } else if (score <= 8) {
+                resultImage = "../img/7-8.png";
+                resultText = "Неплохой полет!";
+            } else {
+                resultImage = "../img/9-10.png";
+                resultText = "Блестящий полет!";
+            }
+
+            resultContainer.innerHTML = `
+        <h2 class="text-3xl font-bold mb-4">Правильных ответов: ${score}/${quizData.length}</h2>
+        <p class="text-xl font-semibold mb-4">${resultText}</p>
+        <img src="${resultImage}" alt="Результат" class="mx-auto mb-4 w-[300px] h-[300px] object-contain">
+        <div class="flex justify-center space-x-4">
+          <a href="../index.html" class="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-400 transition">На главную</a>
+        </div>
+      `;
+
+            document.querySelector("main").innerHTML = "";
+            document.querySelector("main").appendChild(resultContainer);
+        }
+
+        restartButton.addEventListener("click", () => {
+            currentQuestion = 0;
+            score = 0;
+            showQuestion();
+        });
+
+        nextButton.addEventListener("click", () => {
+            currentQuestion++;
+            if (currentQuestion < quizData.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        });
+
+        showQuestion();
+    </script>
+</body>
+
+</html>

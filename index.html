@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITSpace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-cover text-white bg-[url('./img/bg_main.png')]">
+    <header class="p-10">
+        <h1 class="text-6xl md:text-6xl font-bold ">
+            Познавайте мир <span class="text-[#22D3EE]"><br>IT технологий</span><br> в формате <span
+                class="text-[#22D3EE]">игры</span>
+        </h1>
+        <p class="text-lg mt-4">Бесплатные игры <br>для изучения программирования</p>
+        <a href="#games"
+            class="mt-6 inline-flex items-center bg-[#22D3EE] text-[#1E40AF] rounded-[25px] w-[259px] h-[84px] font-semibold text-4xl text-center justify-center">
+            Играть
+            <img src="./img/Polygon 1.svg" class="w-8 h-8 ml-2" alt="Иконка">
+
+        </a>
+    </header>
+
+    <section id="about" class="p-10 text-center">
+        <div
+            class="rounded-lg p-6 mx-auto w-[900px] h-[508px] content-center backdrop-blur-md border-2 border-[#22D3EE]">
+            <h2 class="text-5xl font-semibold text-[#22D3EE] pb-5">О проекте</h2>
+            <p class="mt-4 text-left text-2xl w-[568px] justify-self-center font-normal">
+                Этот проект созданный начинающими IT-<br>специалистами для других начинающих IT-<br>специалистов. <br>
+                Цель проекта - познакомить с азами<br> программирования в простой и понятной<br> игровой форме.
+            </p>
+        </div>
+    </section>
+
+    <section id="games" class="p-10">
+        <h2 class="text-center text-5xl font-bold mb-8">Познавай новое с <span class="text-[#22D3EE]">ItSpace!</span>
+        </h2>
+        <div class="space-y-8">
+            <!-- Memory Card 1 -->
+            <div
+                class="relative bg-[url('./img/bg_card1.png')] w-[900px] h-[600px] bg-cover p-6 mx-auto rounded-lg flex items-center justify-between">
+                <!-- Текстовая часть -->
+                <div class="text-left w-[451px] ml-[110px]  absolute">
+                    <h3 class="text-4xl font-semibold mt-[45px]">Memory</h3>
+                    <p class="mt-4 text-xl">
+                        На столе раскладывается четное количество<br>
+                        парных карточек, рубашками наверх.<br>
+                        Соответствие определений с терминами. <br>
+                        Цель игры — как можно быстрее закончить<br>
+                        её, собрав максимальное количество пар,<br>
+                        открывая по две карточки сразу. <br>
+                    </p>
+                    <a href="./memory/mem1.html"
+                        class="mt-[135px] inline-flex items-center bg-[#A002C8] text-white rounded-[25px] w-[259px] h-[84px] font-semibold text-4xl text-center justify-center">
+                        Играть
+                        <img src="./img/Polygon 2.svg" class="w-8 h-8 ml-2" alt="Иконка">
+
+                    </a>
+                </div>
+                <!-- Изображение -->
+                <img src="./img/card1.png" alt="Memory Game" class="w-[450px] ml-[380px] object-cover">
+            </div>
+
+            <!-- Memory Card 2 -->
+            <div
+                class="relative bg-[url('./img/bg_card2.png')] w-[900px] h-[600px] bg-cover p-6 mx-auto rounded-lg flex items-center justify-between">
+                <div class="text-left w-[451px] ml-[110px] pt-[25px] absolute">
+                    <h3 class="text-4xl font-semibold">Quiz</h3>
+                    <p class="mt-4 text-xl">
+                        Отвечайте на вопросы, демонстрируя свои знания в программировании.<br>
+                        Цель игры — правильно ответить на как можно больше вопросов.
+                        После каждого ответа будет показано пояснение, чтобы вы могли лучше понять тему.<br>
+                        Попробуйте набрать максимальный результат<br> и улучшить свои знания!<br>
+                    </p>
+                    <a href="./quiz/quiz1.html"
+                        class="mt-[85px] inline-flex items-center bg-[#1E40AF] text-white rounded-[25px] w-[259px] h-[84px] font-semibold text-4xl text-center justify-center">
+                        Играть
+                        <img src="./img/Polygon 2.svg" class="w-8 h-8 ml-2" alt="Иконка">
+
+                    </a>
+                </div>
+                <img src="./img/card2.png" alt="Quiz Game" class="w-[450px] ml-[380px] object-cover">
+            </div>
+
+            <!-- Memory Card 3 -->
+            <div
+                class="relative bg-[url('./img/bg_card3.png')] w-[900px] h-[600px] bg-cover p-6 mx-auto rounded-lg flex items-center justify-between">
+                <div class="text-left w-[451px] ml-[110px] pt-[25px] absolute">
+                    <h3 class="text-4xl font-semibold">Hangman</h3>
+                    <p class="mt-4 text-xl ">
+                        Угадывайте слово, основываясь на вопросе.
+                        Слово составлено из скрытых букв,<br> которые вы должны открыть, предлагая свои варианты.
+                        Каждая ошибка приближает космонавта к опасности — части виселицы будут добавляться.<br>
+                        Цель игры — угадать слово, <br>не допустив шести ошибок.<br>
+                        Испытайте свои знания и спасите героя!
+                    </p>
+                    <a href="./hangman.html"
+                        class="mt-[85px] inline-flex items-center bg-[#22D3EE] text-white rounded-[25px] w-[259px] h-[84px] font-semibold text-4xl text-center justify-center">
+                        Играть
+                        <img src="./img/Polygon 2.svg" class="w-8 h-8 ml-2" alt="Иконка">
+
+                    </a>
+                </div>
+                <img src="./img/card1.png" alt="Memory Game" class="w-[450px] ml-[380px] object-cover">
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center p-6 mt-10 text-gray-400">
+        © 2024 ItSpace. Все права защищены.
+    </footer>
+</body>
+
+</html>

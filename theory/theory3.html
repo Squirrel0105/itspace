@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Методы работы с массивами в JavaScript</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-cover text-white bg-[url('../img/bg_other.png')]">
+    <header class="p-6 bg-[#0B1234] flex justify-between items-center h-[150px] w-full">
+        <div class="flex items-center">
+          <a href="../index.html"><img src="../img/super_logo.svg" class="h-[70px]"></a>
+        </div>
+        <nav>
+          <a href="./theory_full.html" class="text-white hover:text-blue-300 transition text-2xl mr-[350px]">Теория</a>
+        </nav>
+      </header>
+
+    <main class="p-10">
+        <section class=" p-6 rounded-lg shadow-lg text-xl backdrop-blur-sm md:container">
+            <h1 class="text-4xl font-bold mb-6">
+                Тема 3: <span class="text-[#0DCED5]">Методы работы с массивами в JavaScript</span>
+            </h1>
+            <p class="mb-4">
+                Массивы — это упорядоченные списки данных, с которыми мы часто работаем в JavaScript. <br>
+                Для удобного управления элементами массива существуют специальные методы.<br>
+                Рассмотрим основные из них: <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">push, shift, forEach, filter и join</code>.
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-6">1. push — добавляет элемент в конец массива</h2>
+            <p>Метод push добавляет один или несколько элементов в конец массива. <br>Он изменяет исходный массив и
+                возвращает новую длину массива.</p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let fruits = ["Яблоко", "Банан"];</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">fruits.push("Апельсин");</code>
+                <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(fruits); // ["Яблоко", "Банан", "Апельсин"]</code><br>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Добавление новых данных, например, товаров в корзину.</p>
+
+            <h2 class="text-2xl font-semibold mt-6">2. shift — удаляет первый элемент массива</h2>
+            <p>Метод shift удаляет первый элемент массива и возвращает его значение.<br> Исходный массив изменяется.</p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let fruits = ["Яблоко", "Банан", "Апельсин"];</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let firstFruit = fruits.shift();</code>
+                <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(firstFruit); // "Яблоко"</code><br>
+                <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(fruits); // ["Банан", "Апельсин"]</code>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Удаление старых данных, например, первого элемента в очереди.</p>
+
+
+            <h2 class="text-2xl font-semibold mt-6">3. forEach — выполняет функцию для каждого элемента</h2>
+            <p>Метод forEach перебирает массив и выполняет заданную функцию для каждого элемента.<br> Он ничего не
+                возвращает.</p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let fruits = ["Яблоко", "Банан", "Апельсин"];</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">fruits.forEach((fruit) => {<br>
+                    console.log(`Я люблю ${fruit}`);<br>
+                  });<br>
+                  </code>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">// Вывод:</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">// Я люблю Яблоко</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">// Я люблю Банан</code>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">// Я люблю Апельсин</code>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Обход массива для выполнения операций с каждым элементом.</p>
+
+            <h2 class="text-2xl font-semibold mt-6">4. filter — создает новый массив с отфильтрованными элементами</h2>
+            <p>Метод filter возвращает новый массив, содержащий только те элементы,<br> которые соответствуют заданному
+                условию.</p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let numbers = [1, 2, 3, 4, 5];</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let evenNumbers = numbers.filter((num) => num % 2 === 0);
+                  </code>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(evenNumbers); // [2, 4]</code><br>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Фильтрация данных, например, отбор товаров по цене или категории.</p>
+
+            <h2 class="text-2xl font-semibold mt-6">5. join — объединяет элементы массива в строку</h2>
+            <p>Метод join преобразует массив в строку, <br>разделяя элементы указанным символом (по умолчанию — запятая).
+            </p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let fruits = ["Яблоко", "Банан", "Апельсин"];</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let fruitString = fruits.join(", ");</code>
+                <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(fruitString); // "Яблоко, Банан, Апельсин"</code><br>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Создание строк из массива, например, списка покупок или тегов.</p>
+
+            <h3 class="font-bold text-3xl mt-5">Итоги</h3>
+            <ul>
+                <li>1. push — добавляет элемент в конец массива.</li>
+                <li>2. shift — удаляет первый элемент массива.</li>
+                <li>3. forEach — выполняет действие для каждого элемента.</li>
+                <li>4. filter — создает новый массив с элементами, которые соответствуют условию.</li>
+                <li>5. join — объединяет элементы массива в строку.</li>
+            </ul>
+        </section>
+
+        <div class="mt-10 text-right">
+            <a href="#games"
+                class="mt-6 inline-flex items-center bg-[#22D3EE] text-[#0B1234] rounded-[25px] w-[259px] h-[84px] font-semibold text-4xl text-center justify-center">
+                Играть
+                <img src="../img/Polygon 3.svg" class="w-8 h-8 ml-2" alt="Иконка">
+
+            </a>
+        </div>
+    </main>
+
+    <footer class="text-center p-6 mt-10 text-gray-400">
+        © 2024 ITSpace. Все права защищены.
+    </footer>
+</body>
+
+</html>

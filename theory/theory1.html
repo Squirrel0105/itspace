@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Основные типы данных в JavaScript</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-cover text-white bg-[url('../img/bg_other.png')]">
+  <header class="p-6 bg-[#0B1234] flex justify-between items-center h-[150px] w-full">
+    <div class="flex items-center">
+      <a href="../index.html"><img src="../img/super_logo.svg" class="h-[70px]"></a>
+    </div>
+    <nav>
+      <a href="./theory_full.html" class="text-white hover:text-blue-300 transition text-2xl mr-[350px]">Теория</a>
+    </nav>
+  </header>
+
+  <main class="p-10">
+    <section class=" p-6 rounded-lg shadow-lg backdrop-blur-sm md:container text-xl">
+      <h1 class="text-4xl font-bold mb-6">
+        Тема 1: <span class="text-[#0DCED5]">Основные типы данных в JavaScript</span>
+      </h1>
+      <p class="mb-4">
+        В JavaScript существует несколько типов данных,<br> которые помогают разработчикам работать с различной информацией.<br>
+        Давайте разберем самые важные типы:<br> числа, строки, логические значения, массивы и объекты.
+      </p>
+
+      <h2 class="text-2xl font-semibold mt-6">1. Число (Number)</h2>
+      <p>Числа используются для хранения любых числовых значений: целых и дробных.</p>
+      <p class="my-2"><span class="font-bold">Пример:</span><br> <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let age = 30; // Целое число</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let price = 19.99; // Дробное число</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let price = 19.99; // Дробное число</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let total = age + price; // Сложение чисел</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(total); // 49.99</code>
+      </p>
+      <p class="font-bold my-2">Где используется?</p>
+      <p>Числа применяются для расчетов, например, <br>для подсчета возраста, цены товаров, или выполнения
+        математических операций.</p>
+
+
+      <h2 class="text-2xl font-semibold mt-6">2. Строка (String)</h2>
+      <p>Строки представляют текстовую информацию и заключаются в кавычки (" ", ' ', или `` `).</p>
+      <p class="my-2"><span class="font-bold">Пример:</span><br> <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let name = "Alice";</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let greeting = "Привет!";</code><br>
+        <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let message = greeting + " Меня зовут " + name + ".";</code><br>
+        <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(message); // Привет! Меня зовут Alice.</code>
+      </p>
+      <p class="font-bold my-2">Где используется?</p>
+      <p>Строки нужны для хранения имен, сообщений, текстовых данных и общения с пользователем.</p>
+
+      <h2 class="text-2xl font-semibold mt-6">3. Булево значение (Boolean)</h2>
+      <p>Булевы значения принимают только два значения: true (истина) или false (ложь).<br> Они помогают принимать решения в
+        коде.</p>
+      <p class="my-2"><span class="font-bold">Пример:</span><br> <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let isOnline = true; // Пользователь онлайн</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let hasAccess = false; // Доступа нет</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">if (isOnline && hasAccess) {<br>
+          console.log("Доступ разрешен");<br>
+        } else {<br>
+          console.log("Доступ запрещен");<br>
+        }
+        </code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">// Результат: Доступ запрещен</code>
+      </p>
+      <p class="font-bold my-2">Где используется?</p>
+      <p>Булевы значения часто применяются для проверок условий и управления потоком выполнения программы.</p>
+
+      <h2 class="text-2xl font-semibold mt-6">4. Массив (Array)</h2>
+      <p>Массивы — это упорядоченные списки данных. <br>Они могут содержать числа, строки, другие массивы и даже объекты.
+      </p>
+      <p class="my-2"><span class="font-bold">Пример:</span><br> <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let fruits = ["Яблоко", "Банан", "Апельсин"];</code><br>
+        <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(fruits[0]); // "Яблоко" (первый элемент)</code><br>
+        <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">fruits.push("Груша"); // Добавляем новый элемент</code><br>
+        <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(fruits); // ["Яблоко", "Банан", "Апельсин", "Груша"]</code>
+      </p>
+      <p class="font-bold my-2">Где используется?</p>
+      <p>Массивы полезны для хранения списков, например, продуктов, задач или пользователей.</p>
+
+
+      <h2 class="text-2xl font-semibold mt-6">4. Объект (Object)</h2>
+      <p>Объект — это сложная структура данных, которая хранит информацию в формате "ключ: значение".</p>
+      <p class="my-2"><span class="font-bold">Пример:</span><br> <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let user = {<br>
+            name: "Alice",<br>
+            age: 25,<br>
+            isOnline: true,<br>
+          }; </code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(user.name); // "Alice"</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(user["age"]); // 25</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">// Добавление новых свойств</code><br>
+        <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">user.city = "Москва";</code><br>
+        <code
+          class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(user); // { name: "Alice", age: 25, isOnline: true, city: "Москва" }</code><br>
+      </p>
+      <p class="font-bold my-2">Где используется?</p>
+      <p>Объекты применяются для группировки связанных данных, например, <br>информации о пользователе, настройках или
+        товарах.</p>
+      <br>
+      <h3 class="font-bold text-3xl">Итоги</h3>
+      <ul>
+        <li>1. Number — для чисел (возраст, цена, результаты расчетов).</li>
+        <li>2. String — для текстов (имена, сообщения, описания).</li>
+        <li>3. Boolean — для логических условий (включено/выключено, истина/ложь).</li>
+        <li>4. Array — для списков данных (списки фруктов, задач).</li>
+        <li>5. Object — для сложных структур (данные о пользователе, настройки).</li>
+      </ul>
+
+    </section>
+
+    <div class="mt-10 text-right">
+      <a href="#games"
+        class="mt-6 inline-flex items-center bg-[#22D3EE] text-[#0B1234] rounded-[25px] w-[259px] h-[84px] font-semibold text-4xl text-center justify-center">
+        Играть
+        <img src="../img/Polygon 3.svg" class="w-8 h-8 ml-2" alt="Иконка">
+
+      </a>
+    </div>
+  </main>
+
+  <footer class="text-center p-6 mt-10 text-gray-400">
+    © 2024 ITSpace. Все права защищены.
+  </footer>
+</body>
+
+</html>

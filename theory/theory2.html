@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переменные в JavaScript: var, let, const</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-cover text-white bg-[url('../img/bg_other.png')]">
+    <header class="p-6 bg-[#0B1234] flex justify-between items-center h-[150px] w-full">
+        <div class="flex items-center">
+          <a href="../index.html"><img src="../img/super_logo.svg" class="h-[70px]"></a>
+        </div>
+        <nav>
+          <a href="./theory_full.html" class="text-white hover:text-blue-300 transition text-2xl mr-[350px]">Теория</a>
+        </nav>
+      </header>
+
+    <main class="p-10">
+        <section class=" p-6 rounded-lg shadow-lg text-xl backdrop-blur-sm md:container">
+            <h1 class="text-4xl font-bold mb-6">
+                Тема 2: <span class="text-[#0DCED5]">Переменные в JavaScript:<code
+                        class="bg-gray-800 text-blue-200 px-2 py-1 rounded">var, let, const</code> </span>
+            </h1>
+            <p class="mb-4">
+                В JavaScript переменные — это "контейнеры" для хранения данных. <br>Вы можете использовать три способа
+                их
+                создания: <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">var, let и const</code>. <br>
+                Разберем их
+                просто и понятно.
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-6">1. var — старый способ (лучше не использовать)</h2>
+            <ul class="list-disc list-inside">
+                <li>Работает по всему коду или внутри функции, игнорируя блоки.</li>
+                <li>Можно переопределять.</li>
+            </ul>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">var name = "Alice";</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">if (true) {<br>
+                    var name = "Bob"; // Переменная переопределится<br>
+                }<br>
+                  </code>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(name); // "Bob"</code><br>
+            </p>
+            <p><span class="font-bold">Проблема: </span>переменная меняется за пределами блока.</p>
+
+            <h2 class="text-2xl font-semibold mt-6">2. let — современный и безопасный</h2>
+            <ul class="list-disc list-inside">
+                <li>Работает только в пределах блока, где объявлена.</li>
+                <li>Можно менять значение.</li>
+            </ul>
+            <p class="my-3"><span class="font-bold">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let score = 10;</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">if (true) {<br>
+                    let score = 20; // Это другая переменная внутри блока<br>
+                }
+                  </code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(score); // "10"</code><br>
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-6">3. const — для неизменяемых данных</h2>
+            <ul class="list-disc list-inside">
+                <li>Значение нельзя переназначить.</li>
+                <li>Работает в пределах блока.</li>
+            </ul>
+            <p class="my-3"><span class="font-bold">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">const maxLives = 3;</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">maxLives = 5; // Ошибка!</code><br>
+            </p>
+
+            <h3 class="font-bold text-3xl pt-3">Что использовать?</h3>
+            <ul class="list-disc list-inside">
+                <li><code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let</code> — для переменных, которые меняются.</li>
+                <li><code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">const</code> — для данных, которые остаются неизменными.</li>
+                <li><code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">var</code> — лучше избегать.</li>
+            </ul>
+
+        </section>
+
+        <div class="mt-10 text-right">
+            <a href="#games"
+                class="mt-6 inline-flex items-center bg-[#22D3EE] text-[#0B1234] rounded-[25px] w-[259px] h-[84px] font-semibold text-4xl text-center justify-center">
+                Играть
+                <img src="../img/Polygon 3.svg" class="w-8 h-8 ml-2" alt="Иконка">
+
+            </a>
+        </div>
+    </main>
+
+    <footer class="text-center p-6 mt-10 text-gray-400">
+        © 2024 ITSpace. Все права защищены.
+    </footer>
+</body>
+
+</html>

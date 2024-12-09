@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Работа с DOM в JavaScript: Основные методы</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-cover text-white bg-[url('../img/bg_other.png')]">
+    <header class="p-6 bg-[#0B1234] flex justify-between items-center h-[150px] w-full">
+        <div class="flex items-center">
+          <a href="../index.html"><img src="../img/super_logo.svg" class="h-[70px]"></a>
+        </div>
+        <nav>
+          <a href="./theory_full.html" class="text-white hover:text-blue-300 transition text-2xl mr-[350px]">Теория</a>
+        </nav>
+      </header>
+
+    <main class="p-10">
+        <section class=" p-6 rounded-lg shadow-lg text-xl backdrop-blur-sm md:container">
+            <h1 class="text-4xl font-bold mb-6">
+                Тема 4: <span class="text-[#0DCED5]">Работа с DOM в JavaScript: Основные методы</span>
+            </h1>
+            <p class="mb-4">
+                DOM (Document Object Model) — это структура, которая представляет HTML-документ как дерево объектов.<br>
+                JavaScript позволяет вам взаимодействовать с элементами на странице с помощью различных методов.<br>
+                Рассмотрим основные:<code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">document.getElementById, document.querySelector, addEventListener, textContent и
+                document.createElement</code>.
+            </p>
+
+            <h2 class="text-2xl font-semibold mt-6">1. document.getElementById — поиск элемента по ID</h2>
+            <p>Метод getElementById позволяет найти элемент на странице по его уникальному атрибуту id.</p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let header = document.getElementById("main-header");</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(header); // Привет, мир!</code><br>
+                <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(fruits); // ["Яблоко", "Банан", "Апельсин"]</code><br>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Быстрый доступ к конкретному элементу с заданным id, например, заголовку или блоку.</p>
+
+            <h2 class="text-2xl font-semibold mt-6">2. document.querySelector — универсальный поиск</h2>
+            <p>Метод querySelector ищет первый элемент, соответствующий CSS-селектору.</p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let firstParagraph = document.querySelector(".text");</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(firstParagraph); // Это текстовый блок</code>
+                </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Для поиска элементов по тегам, классам, ID или сложным селекторам.</p>
+
+
+            <h2 class="text-2xl font-semibold mt-6">3. addEventListener — добавление обработчика события</h2>
+            <p>Метод addEventListener добавляет обработчик события к элементу (например, клики, ввод текста, наведение мыши).</p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let button = document.querySelector(".btn");</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">button.addEventListener("click", () => {<br>
+                    console.log("Кнопка нажата!");<br>
+                  });<br>
+                  </code>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Для взаимодействия с пользователем, например, кликов на кнопки или отправки форм.</p>
+
+            <h2 class="text-2xl font-semibold mt-6">4. textContent — изменение текста элемента</h2>
+            <p>Свойство textContent позволяет получить или изменить текст внутри элемента.</p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let header = document.getElementById("main-header");</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">header.textContent = "Добро пожаловать!";
+                  </code>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">console.log(header.textContent); // "Добро пожаловать!"</code><br>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Для обновления текста на странице, например, вывода сообщений пользователю.</p>
+
+            <h2 class="text-2xl font-semibold mt-6">5. document.createElement — создание нового элемента</h2>
+            <p>Метод createElement создает новый элемент, который можно добавить на страницу.
+            </p>
+            <p class="my-3"><span class="font-bold mb-2">Пример:</span><br> <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">let newDiv = document.createElement("div");</code><br>
+                <code class="bg-gray-800 text-blue-200 px-2 py-1 rounded">newDiv.textContent = "Это новый блок!";</code><br>
+                <code
+                    class="bg-gray-800 text-blue-200 px-2 py-1 rounded">document.body.appendChild(newDiv); // Добавляем блок в конец страницы</code><br>
+            </p>
+            <p class="font-bold my-2">Где использовать?</p>
+            <p>Для динамического добавления контента, например, новых сообщений, карточек или кнопок.</p>
+
+            <h3 class="font-bold text-3xl mt-5">Итоги</h3>
+            <ul>
+                <li>1. document.getElementById — найти элемент по его id.</li>
+                <li>2. document.querySelector — найти элемент с помощью CSS-селектора.</li>
+                <li>3. addEventListener — реагировать на события (например, клики).</li>
+                <li>4. textContent — изменить текст элемента.</li>
+                <li>5. document.createElement — создать новый элемент.</li>
+            </ul>
+        </section>
+
+        <div class="mt-10 text-right">
+            <a href="#games"
+                class="mt-6 inline-flex items-center bg-[#22D3EE] text-[#0B1234] rounded-[25px] w-[259px] h-[84px] font-semibold text-4xl text-center justify-center">
+                Играть
+                <img src="../img/Polygon 3.svg" class="w-8 h-8 ml-2" alt="Иконка">
+
+            </a>
+        </div>
+    </main>
+
+    <footer class="text-center p-6 mt-10 text-gray-400">
+        © 2024 ITSpace. Все права защищены.
+    </footer>
+</body>
+
+</html>

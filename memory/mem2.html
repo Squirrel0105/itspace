@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ITSpace Memory Game</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .card {
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 16px;
+    }
+
+    .card-front {
+      background-color: #1E40AF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+      padding: 5px;
+      transform: rotateY(180deg);
+    }
+
+    .card-back {
+      background-color: #1E1B4B;
+      background-image: url('../img/Star2.png');
+      background-size: 150px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .card:hover .card-inner {
+      box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+    }
+
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #1E1B4B;
+      border: 2px solid #0DCED5;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      z-index: 1000;
+      width: 80%;
+      max-width: 400px;
+    }
+
+    #result-popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #1E1B4B;
+      border: 2px solid #0DCED5;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      z-index: 1000;
+      width: 80%;
+      max-width: 400px;
+      display: none;
+    }
+  </style>
+</head>
+
+<body class="bg-cover bg-[url('../img/bg_other.png')] text-white min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="p-6 bg-[#0B1234] flex justify-between items-center h-[150px] w-full">
+    <div class="flex items-center">
+      <a href="../index.html"><img src="../img/super_logo.svg" class="h-[70px]"></a>
+    </div>
+    <nav>
+      <a href="../theory/theory_full.html" class="text-white hover:text-blue-300 transition text-2xl mr-[350px]">Теория</a>
+    </nav>
+  </header>
+
+  <!-- Memory Game -->
+  <main class="flex flex-col items-center justify-center flex-grow p-10 hidden" id="gameContainer">
+    <div class="flex justify-between items-center w-full max-w-4xl mb-6">
+      <div>
+        <h1 class="text-6xl font-bold">Memory</h1>
+        <p class="font-bold text-4xl mt-3">Тема 2: Переменные в JavaScript</p>
+      </div>
+      <button id="restart"
+        class="bg-[#0DCED5] text-[#0B1234] rounded-[25px] px-6 py-3 inline-flex items-center text-center justify-center font-semibold text-3xl hover:bg-[#1BC9E0] transition w-[259px] h-[84px]">
+        Заново <img src="../img/refresh.svg" class="ml-2">
+      </button>
+    </div>
+    <p id="moves-counter" class="text-lg mb-4">Кол-во ходов: 0</p>
+    <div id="game-board" class="grid grid-cols-4 gap-6 max-w-4xl w-full">
+      <!-- Карточки будут добавлены через JS -->
+    </div>
+  </main>
+
+  <!-- Modals -->
+  <div id="overlay"></div>
+  <div id="popup">
+    <h2 class="text-3xl font-bold mb-4">Перед началом игры!</h2>
+    <p class="mb-6">Изучите теорию, чтобы лучше справиться с заданиями!</p>
+    <div class="flex justify-center space-x-4">
+      <a href="../theory/theory_full.html" class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-400 transition">Перейти в теорию</a>
+      <button id="startGame" class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-400 transition">Начать игру</button>
+    </div>
+  </div>
+
+  <!-- Результаты -->
+  <div id="result-popup">
+    <h2 class="text-2xl font-bold mb-4">Игра окончена!</h2>
+    <p id="result-message" class="text-lg mb-6"></p>
+    <a href="./mem3.html" 
+       class="bg-[#0DCED5] text-[#0B1234] rounded-[25px] px-4 py-2 text-xl font-semibold hover:bg-[#1BC9E0] transition">
+       Перейти к следующему уроку
+    </a>
+  </div>
+  
+
+  <script>
+    const cardsData = [
+      { text: "Доступна только внутри блока {}", match: "let" },
+      { text: "Доступна внутри функции или глобально, игнорируя блоки", match: "var" },
+      { text: "Нельзя переназначить значение", match: "const" },
+      { text: "Используется для объявления переменных с глобальной или функциональной областью видимости", match: "var" },
+      { text: "Подходит для работы с переменными, которые могут изменяться в пределах текущего блока кода", match: "let" },
+      { text: "Лучший выбор для значений, которые не должны изменяться", match: "const" },
+    ];
+
+    let firstCard = null;
+    let secondCard = null;
+    let matchedPairs = 0;
+    let moves = 0;
+
+    const gameBoard = document.getElementById("game-board");
+    const movesCounter = document.getElementById("moves-counter");
+    const restartButton = document.getElementById("restart");
+    const overlay = document.getElementById("overlay");
+    const resultPopup = document.getElementById("result-popup");
+    const resultMessage = document.getElementById("result-message");
+    // const closePopupButton = document.getElementById("close-popup");
+    const startGameButton = document.getElementById("startGame");
+    const gameContainer = document.getElementById("gameContainer");
+    const popup = document.getElementById("popup");
+
+    document.addEventListener("DOMContentLoaded", () => {
+      overlay.style.display = "block";
+      popup.style.display = "block";
+    });
+
+    startGameButton.addEventListener("click", () => {
+      overlay.style.display = "none";
+      popup.style.display = "none";
+      gameContainer.classList.remove("hidden");
+    });
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function createCards() {
+      const cards = [...cardsData, ...cardsData.map(item => ({ text: item.match, match: item.text }))];
+      shuffle(cards);
+
+      gameBoard.innerHTML = "";
+      cards.forEach((data) => {
+        const card = document.createElement("div");
+        card.classList.add("card", "cursor-pointer", "rounded-lg", "w-[100px]", "h-[100px]", "sm:w-[150px]", "sm:h-[150px]", "lg:w-[200px]", "lg:h-[200px]");
+        card.dataset.match = data.match;
+
+        const cardInner = document.createElement("div");
+        cardInner.classList.add("card-inner", "rounded-lg");
+
+        const front = document.createElement("div");
+        front.classList.add("card-front", "rounded-lg");
+        front.textContent = data.text;
+
+        const back = document.createElement("div");
+        back.classList.add("card-back", "rounded-lg");
+
+        cardInner.appendChild(front);
+        cardInner.appendChild(back);
+        card.appendChild(cardInner);
+
+        card.addEventListener("click", () => flipCard(card));
+        gameBoard.appendChild(card);
+      });
+    }
+
+    function flipCard(card) {
+      if (card.classList.contains("flipped") || (firstCard && secondCard)) return;
+
+      card.classList.add("flipped");
+
+      if (!firstCard) {
+        firstCard = card;
+      } else {
+        secondCard = card;
+        moves++;
+        movesCounter.textContent = `Кол-во ходов: ${moves}`;
+        checkMatch();
+      }
+    }
+
+    function checkMatch() {
+      const isMatch = firstCard.dataset.match === secondCard.querySelector(".card-front").textContent ||
+        secondCard.dataset.match === firstCard.querySelector(".card-front").textContent;
+
+      if (isMatch) {
+        matchedPairs++;
+        firstCard = null;
+        secondCard = null;
+
+        if (matchedPairs === cardsData.length) {
+          setTimeout(() => showResults(), 500);
+        }
+      } else {
+        setTimeout(() => {
+          flipBack(firstCard);
+          flipBack(secondCard);
+          firstCard = null;
+          secondCard = null;
+        }, 1000);
+      }
+    }
+
+    function flipBack(card) {
+      card.classList.remove("flipped");
+    }
+
+    function showResults() {
+      overlay.style.display = "block";
+      resultPopup.style.display = "block";
+      resultMessage.textContent = `Вы нашли все пары за ${moves} ходов!`;
+    }
+
+    // closePopupButton.addEventListener("click", () => {
+    //   overlay.style.display = "none";
+    //   resultPopup.style.display = "none";
+    // });
+
+    restartButton.addEventListener("click", () => {
+      firstCard = null;
+      secondCard = null;
+      matchedPairs = 0;
+      moves = 0;
+      movesCounter.textContent = "Кол-во ходов: 0";
+      createCards();
+    });
+
+    createCards();
+  </script>
+</body>
+
+</html>

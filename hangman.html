@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Космическая Виселица</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+      background-color: transparent;
+    }
+
+    #overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+    }
+
+    #popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #1E1B4B;
+      border: 2px solid #0DCED5;
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      z-index: 1000;
+      width: 80%;
+      max-width: 400px;
+    }
+  </style>
+</head>
+
+<body class="bg-cover bg-[url('./img/bg_other.png')] text-white min-h-screen flex flex-col">
+  <!-- Header -->
+  <header class="p-6 bg-[#0B1234] flex justify-between items-center h-[150px] w-full">
+    <div class="flex items-center">
+      <a href="./index.html"><img src="./img/super_logo.svg" class="h-[70px]"></a>
+    </div>
+    <nav>
+      <a href="./theory/theory_full.html" class="text-white hover:text-blue-300 transition text-2xl mr-[350px]">Теория</a>
+    </nav>
+  </header>
+
+
+  <!-- Game Section -->
+  <main class="text-center mt-10 w-full max-w-4xl mx-auto flex-grow">
+    <h1 class="text-4xl font-bold mb-6">Космическая Виселица</h1>
+    <p id="question" class="text-xl font-semibold mb-4"></p>
+    <canvas id="hangmanCanvas" width="150" height="150"></canvas>
+    <div id="word" class="flex justify-center gap-2 mb-6"></div>
+    <p id="attempts" class="text-lg mb-6"></p>
+    <div id="letters" class="grid grid-cols-8 gap-2 mb-6"></div>
+    <button id="restart" class="hidden px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-400 transition">
+      Начать заново
+    </button>
+    <div id="message" class="text-xl font-bold mt-6"></div>
+  </main>
+
+  <!-- Modal -->
+  <div id="overlay"></div>
+  <div id="popup">
+    <h2 class="text-3xl font-bold mb-4">Перед началом игры!</h2>
+    <p class="mb-6">Изучите теорию, чтобы лучше справиться с заданиями!</p>
+    <div class="flex justify-center space-x-4">
+      <a href="./theory/theory_full.html" class="bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-400 transition">Перейти в теорию</a>
+      <button id="startGame" class="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-400 transition">Начать игру</button>
+    </div>
+  </div>
+
+  <footer class="text-center p-6 mt-10 text-gray-400">
+    © 2024 ITSpace. Все права защищены.
+  </footer>
+
+  <script>
+    const questions = [
+      { question: "Какой тип данных используется для хранения текста?", answer: "STRING" },
+      { question: "Как называется тип данных, который хранит числа?", answer: "NUMBER" },
+      { question: "Какой тип данных представляет собой список значений?", answer: "ARRAY" },
+      { question: "Как называется логический тип данных, который может быть только true или false?", answer: "BOOLEAN" },
+      { question: "Какой метод массива добавляет элемент в конец?", answer: "PUSH" },
+    ];
+
+    const canvas = document.getElementById("hangmanCanvas");
+    const context = canvas.getContext("2d");
+
+    const canvasCreator = () => {
+      const lineWidth = 3;
+      const lineColor = "white";
+
+      const drawLine = (x1, y1, x2, y2) => {
+        context.lineWidth = lineWidth;
+        context.strokeStyle = lineColor;
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.stroke();
+      };
+
+      const head = () => {
+        context.beginPath();
+        context.arc(70, 30, 10, 0, Math.PI * 2, true);
+        context.stroke();
+      };
+
+      const body = () => drawLine(70, 40, 70, 80);
+      const rightArm = () => drawLine(70, 50, 90, 70);
+      const leftArm = () => drawLine(70, 50, 50, 70);
+      const leftLeg = () => drawLine(70, 80, 50, 110);
+      const rightLeg = () => drawLine(70, 80, 90, 110);
+
+      const initialDrawing = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        drawLine(10, 130, 130, 130);
+        drawLine(10, 10, 10, 130);
+        drawLine(10, 10, 70, 10);
+        drawLine(70, 10, 70, 20);
+      };
+
+      return { initialDrawing, head, body, leftArm, rightArm, leftLeg, rightLeg };
+    };
+
+    const drawMan = (count) => {
+      const { head, body, leftArm, rightArm, leftLeg, rightLeg } = canvasCreator();
+      if (count === 1) head();
+      else if (count === 2) body();
+      else if (count === 3) leftArm();
+      else if (count === 4) rightArm();
+      else if (count === 5) leftLeg();
+      else if (count === 6) rightLeg();
+    };
+
+    let currentAnswer = "";
+    let guessedLetters = [];
+    let remainingAttempts = 6;
+
+    const questionElement = document.getElementById("question");
+    const wordElement = document.getElementById("word");
+    const attemptsElement = document.getElementById("attempts");
+    const lettersElement = document.getElementById("letters");
+    const messageElement = document.getElementById("message");
+    const restartButton = document.getElementById("restart");
+    const overlay = document.getElementById("overlay");
+    const popup = document.getElementById("popup");
+    const startGameButton = document.getElementById("startGame");
+
+    document.addEventListener("DOMContentLoaded", () => {
+      overlay.style.display = "block";
+      popup.style.display = "block";
+    });
+
+    startGameButton.addEventListener("click", () => {
+      overlay.style.display = "none";
+      popup.style.display = "none";
+      initializeGame();
+    });
+
+    function initializeGame() {
+      const { initialDrawing } = canvasCreator();
+      initialDrawing();
+
+      const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+      currentAnswer = randomQuestion.answer.toUpperCase();
+      guessedLetters = [];
+      remainingAttempts = 6;
+
+      questionElement.textContent = randomQuestion.question;
+      messageElement.textContent = "";
+      restartButton.classList.add("hidden");
+
+      displayWord();
+      displayAttempts();
+      createLetterButtons();
+    }
+
+    function displayWord() {
+      wordElement.innerHTML = "";
+      for (const letter of currentAnswer) {
+        const span = document.createElement("span");
+        span.className = "border-b-2 border-white text-2xl px-2";
+        span.textContent = guessedLetters.includes(letter) ? letter : "_";
+        wordElement.appendChild(span);
+      }
+    }
+
+    function displayAttempts() {
+      attemptsElement.textContent = `Осталось попыток: ${remainingAttempts}`;
+    }
+
+    function createLetterButtons() {
+      lettersElement.innerHTML = "";
+      for (let i = 65; i <= 90; i++) {
+        const letter = String.fromCharCode(i);
+        const button = document.createElement("button");
+        button.textContent = letter;
+        button.className = "bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-400";
+        button.disabled = guessedLetters.includes(letter);
+        button.addEventListener("click", () => handleLetterClick(letter));
+        lettersElement.appendChild(button);
+      }
+    }
+
+    function handleLetterClick(letter) {
+      guessedLetters.push(letter);
+
+      if (currentAnswer.includes(letter)) {
+        if (currentAnswer.split("").every((l) => guessedLetters.includes(l))) {
+          messageElement.textContent = "Поздравляем, вы угадали слово!";
+          lettersElement.innerHTML = "";
+          restartButton.classList.remove("hidden");
+        }
+      } else {
+        remainingAttempts--;
+        drawMan(6 - remainingAttempts);
+        displayAttempts();
+
+        if (remainingAttempts === 0) {
+          messageElement.textContent = `Вы проиграли! Слово было: ${currentAnswer}`;
+          lettersElement.innerHTML = "";
+          restartButton.classList.remove("hidden");
+        }
+      }
+
+      displayWord();
+      createLetterButtons();
+    }
+
+    restartButton.addEventListener("click", initializeGame);
+
+    initializeGame();
+  </script>
+</body>
+
+</html>

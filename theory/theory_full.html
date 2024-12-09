@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сборник теории</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        a:hover {
+            opacity: 0.8; /* Makes the card fade slightly */
+            transition: opacity 0.3s ease; /* Smooth transition effect */
+        }
+    </style>
+</head>
+
+<body class="bg-cover bg-[url('../img/bg_other.png')] text-white min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="p-6 bg-[#0B1234] flex justify-between items-center h-[150px] w-full">
+        <div class="flex items-center">
+          <a href="../index.html"><img src="../img/super_logo.svg" class="h-[70px]"></a>
+        </div>
+        <nav>
+          <a href="./theory/theory_full.html" class="text-white hover:text-blue-300 transition text-2xl mr-[350px]">Теория</a>
+        </nav>
+      </header>
+
+    <!-- Main Section -->
+    <main class="p-10 w-full max-w-6xl mx-auto flex-grow">
+        <h1 class="text-5xl font-bold text-center mb-10">Сборник теоретического материала</h1>
+
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Memory Theory -->
+            <a href="./theory1.html" class="bg-[#1E1B4B] rounded-lg p-6 shadow-lg hover:bg-[#A21CAF] transition">
+                <h2 class="text-3xl font-semibold mb-4">Тема 1: Основы типов данных</h2>
+                <p class="text-lg">
+                    Изучите основные типы данных, используемые в JavaScript: строки, числа, булевы значения и многое
+                    другое.
+                </p>
+            </a>
+
+            <!-- Quiz Theory -->
+            <a href="./theory2.html" class="bg-[#1E1B4B] rounded-lg p-6 shadow-lg hover:bg-[#A21CAF] transition">
+                <h2 class="text-3xl font-semibold mb-4">Тема 2: Переменные: var, let, const</h2>
+                <p class="text-lg">
+                    Узнайте, как использовать различные типы данных, и научитесь определять их через практику.
+                </p>
+            </a>
+
+            <!-- Methods with Arrays -->
+            <a href="./theory3.html" class="bg-[#1E1B4B] rounded-lg p-6 shadow-lg hover:bg-[#A21CAF] transition">
+                <h2 class="text-3xl font-semibold mb-4">Тема 3: Методы работы с массивами</h2>
+                <p class="text-lg">
+                    Откройте для себя полезные методы работы с массивами: push, shift, filter, join и другие.
+                </p>
+            </a>
+
+            <!-- DOM Methods -->
+            <a href="./theory4.html" class="bg-[#1E1B4B] rounded-lg p-6 shadow-lg hover:bg-[#A21CAF] transition">
+                <h2 class="text-3xl font-semibold mb-4">Тема 4: Работа с DOM</h2>
+                <p class="text-lg">
+                    Исследуйте методы работы с DOM: getElementById, querySelector, createElement и их практическое
+                    применение.
+                </p>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center p-6 mt-10 text-gray-400">
+        © 2024 ITSpace. Все права защищены.
+    </footer>
+</body>
+
+</html>
